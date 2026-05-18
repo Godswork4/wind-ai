@@ -1,0 +1,84 @@
+{
+  "entities": {
+    "ReadingDocument": {
+      "title": "Reading Document",
+      "description": "A document or text text excerpt for study.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "sourceUrl": { "type": "string" },
+        "courseId": { "type": "string" },
+        "ownerId": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "content", "ownerId", "createdAt", "updatedAt"]
+    },
+    "Highlight": {
+      "title": "Highlight",
+      "description": "A highlighted section of a reading document.",
+      "type": "object",
+      "properties": {
+        "documentId": { "type": "string" },
+        "userId": { "type": "string" },
+        "text": { "type": "string" },
+        "range": {
+          "type": "object",
+          "properties": {
+            "start": { "type": "integer" },
+            "end": { "type": "integer" }
+          },
+          "required": ["start", "end"]
+        },
+        "color": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["documentId", "userId", "text", "range", "createdAt"]
+    },
+    "Note": {
+      "title": "Note",
+      "description": "A note associated with a document or specific part of it.",
+      "type": "object",
+      "properties": {
+        "documentId": { "type": "string" },
+        "userId": { "type": "string" },
+        "content": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["documentId", "userId", "content", "createdAt", "updatedAt"]
+    },
+    "Course": {
+      "title": "Course",
+      "description": "A collection of documents and materials for a specific subject.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "ownerId": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "ownerId", "createdAt", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/documents/{docId}": {
+      "schema": "ReadingDocument",
+      "description": "Store for reading materials."
+    },
+    "/documents/{docId}/highlights/{highlightId}": {
+      "schema": "Highlight",
+      "description": "Highlights for a specific document."
+    },
+    "/documents/{docId}/notes/{noteId}": {
+      "schema": "Note",
+      "description": "Notes for a specific document."
+    },
+    "/courses/{courseId}": {
+      "schema": "Course",
+      "description": "Courses created by the user."
+    }
+  }
+}
